@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <h2 class="mb-4">{{ isEditMode ? 'Edit Vendor' : 'Add Vendor' }}</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Vendor ID</th>
+        <th scope="col">Vendor Name</th>
+        <th scope="col">Vendor Code</th>
+        <th scope="col">Vendor Phone Number</th>
+        <th scope="col">Vendor Email</th>
+        <th scope="col">Vendor Created On</th>
+        <th scope="col">Vendor Is Active</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vendor of vendors">
+        <td>{{ vendor.vendorId }}</td>
+        <td>{{ vendor.vendorName }}</td>
+        <td>{{ vendor.vendorCode }}</td>
+        <td>{{ vendor.vendorPhoneNumber }}</td>
+        <td>{{ vendor.vendorEmail }}</td>
+        <td>{{ vendor.vendorCreatedOn | date }}</td>
+        <td>{{ vendor.isActive }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm m-1" (click)="editVendor(vendor.vendorCode)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteVendor(vendor.vendorId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination and Controls -->
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <!-- Pagination buttons -->
+      <div>
+        <button class="btn btn-secondary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <span class="m-2">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+      </div>
+      
+      <!-- CSV download and Add Vendor button -->
+      <div>
+        <button class="btn btn-secondary m-1" (click)="downloadCSV()">Download CSV</button>
+        <button class="btn btn-primary" routerLink="vendors/vendorsform">Add New Vendor</button>
+      </div>
+    </div>
+  </div>
+</div>

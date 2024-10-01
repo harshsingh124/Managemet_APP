@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <h2 class="mb-4">{{ isEditMode ? 'Edit Vendor' : 'Add Vendor' }}</h2>
+  <form [formGroup]="vendorForm" >
+    <div class="mb-3">
+      <label for="vendorCode" class="form-label">Vendor Code</label>
+      <input type="text" id="vendorCode" formControlName="vendorCode" class="form-control" required>
+      <div *ngIf="vendorForm.get('vendorCode')!.invalid && (vendorForm.get('vendorCode')!.touched || vendorForm.get('vendorCode')!.dirty)" class="text-danger">
+ 
+        <div *ngIf="vendorForm.get('vendorCode')!.errors?.['minlength'] || vendorForm.get('vendorCode')!.errors?.['maxlength']"></div>
+          Code must be 3 or less than 10
+        
+        <div *ngIf="vendorForm.get('vendorCode')!.errors?.['minlength']">Phone Number must be exactly 10 digits.</div>
+        <div *ngIf="vendorForm.get('vendorCode')!.errors?.['required']">Vendor Code is required.</div>
+    
+        <div *ngIf="vendorForm.get('vendorCode')!.errors?.['vendorCodeExists']">Vendor Code already exists.</div>
+
+     </div>
+    </div>
+    
+    <div class="mb-3">
+      <label for="vendorName" class="form-label">Vendor Name</label>
+      <input id="vendorName" formControlName="vendorName" class="form-control" required>
+      <div *ngIf="vendorForm.get('vendorName')!.invalid && (vendorForm.get('vendorName')!.touched || vendorForm.get('vendorName')!.dirty)" class="text-danger">
+        Vendor Name is required.
+      </div>
+      
+    </div>
+    
+    <div class="mb-3">
+      <label for="vendorPhoneNumber" class="form-label">Vendor Phone</label>
+      <input id="vendorPhoneNumber" formControlName="vendorPhoneNumber" class="form-control" required>
+      <div *ngIf="vendorForm.get('vendorPhoneNumber')!.invalid && (vendorForm.get('vendorPhoneNumber')!.touched || vendorForm.get('vendorPhoneNumber')!.dirty)" class="text-danger">
+        <div *ngIf="vendorForm.get('vendorPhoneNumber')!.errors?.['required']">Phone Number is required.</div>
+        <div *ngIf="vendorForm.get('vendorPhoneNumber')!.errors?.['pattern']">Phone Number must be exactly 10 digits.</div>
+      </div>
+    </div>
+    
+    <div class="mb-3">
+      <label for="vendorEmail" class="form-label">Vendor Email</label>
+      <input id="vendorEmail" formControlName="vendorEmail" type="email" class="form-control" required>
+      <div *ngIf="vendorForm.get('vendorEmail')!.invalid && (vendorForm.get('vendorEmail')!.touched || vendorForm.get('vendorEmail')!.dirty)" class="text-danger">
+        <div *ngIf="vendorForm.get('vendorEmail')!.errors?.['required']">Email is required.</div>
+        <div *ngIf="vendorForm.get('vendorEmail')!.errors?.['email']">Invalid email format.</div>
+      </div>
+    </div>
+
+    
+    <div class="d-flex">
+      <button  class="btn btn-primary me-2" *ngIf="!isEditMode" [disabled]="vendorForm.invalid"  (click)="addVendor()">
+        Add Vendor
+      </button>
+      <button  class="btn btn-primary me-2" *ngIf="isEditMode" [disabled]="vendorForm.invalid"   (click)="updateVendor()">
+        Edit Vendor
+      </button>
+    </div>
+  </form>
+
+</div>

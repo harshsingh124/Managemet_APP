@@ -1,0 +1,67 @@
+<div class="container mt-4">
+  <h2 class="mb-4">{{ isEditMode ? 'Edit Invoice' : 'Add Invoice' }}</h2>
+
+  <div class="container">
+    <div class="mb-3">
+      <label for="currencyId">Currency Name</label>
+      <select id="currencyId" class="form-control" required [(ngModel)]="cId" (change)="onChange()">
+        <option value="0">Select Currency</option>
+        <option *ngFor="let currency of currencies" [value]="currency.currencyId">{{ currency.currencyName }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="vendorId">Vendor Name</label>
+      <select id="vendorId" class="form-control" required [(ngModel)]="vId" (change)="onChange()">
+        <option value="0">Select Vendor</option>
+        <option *ngFor="let vendor of vendors" [value]="vendor.vendorId">{{ vendor.vendorName }}</option>
+      </select>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Invoice Number</th>
+        <th scope="col">Vendor Name</th>
+        <th scope="col">Currency Code</th>
+        <th scope="col">Invoice Amount</th>
+        <th scope="col">Invoice Received Date</th>
+        <th scope="col">Invoice Due Date</th>
+        <th scope="col">Is Active</th>
+        <th scope="col">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of pagedinvoice">
+        <td>{{ i.invoiceNumber }}</td>
+        <td>{{ getVendorCode(i.vendorId) }}</td>
+        <td>{{ getCurrencyCode(i.currencyId) }}</td>
+        <td>{{ i.invoiceAmount | currency:getCurrencyCode(i.currencyId) }}</td>
+        <td>{{ i.receivedDate | date: 'dd-MM-yyyy' }}</td>
+        <td>{{ i.invoiceDueDate | date: 'dd-MM-yyyy' }}</td>
+        <td>{{ i.isActive ? 'Yes' : 'No' }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm m-1" (click)="editInvoice(i.invoiceId)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteInvoice(i.invoiceId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="text-center">
+    <button class="btn btn-secondary" (click)="goToPreviousPage()" [disabled]="currentPage === 1">Previous</button>
+    <span class="m-2">Page {{ currentPage }} of {{ numberOfPages }}</span>
+    <button class="btn btn-secondary" (click)="goToNextPage()" [disabled]="currentPage === numberOfPages">Next</button>
+  </div>
+
+  <div class="text-end">
+    <button class="btn btn-secondary m-1" (click)="downloadCSV()">Download CSV</button>
+    <button class="btn btn-primary" routerLink="invoice/invoiceform">Add New Invoice</button>
+  </div>
+  </div>
+  </div>
+</div>

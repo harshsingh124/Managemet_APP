@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h2 class="mb-4">{{ isEditMode ? 'Edit Currency' : 'Currency List' }}</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th >Currency ID</th>
+        <th >Currency Name</th>
+        <th >Currency Code</th>
+       
+        <th >Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of currencies">
+        <td>{{ c.currencyId }}</td>
+        <td>{{ c.currencyName }}</td>
+        <td>{{ c.currencyCode }}</td>
+       
+        <td>
+          <button class="btn btn-warning btn-sm m-1" (click)="editCurrency(c.currencyId)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteCurrency(c.currencyId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      
+      <div class="pagination">
+        <button class="btn btn-secondary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <span class="m-2">  Page {{ currentPage }} of {{ totalPages }} </span>
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+      </div>
+  <div class="text-end">
+    <button class="btn btn-secondary m-1" (click)="downloadCSV()">Download CSV</button>
+    <button class="btn btn-primary" routerLink="currencies/currenciesform">Add New Currency</button>
+  </div>
+
+</div>
+  </div>
+</div>

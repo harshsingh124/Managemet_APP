@@ -1,0 +1,66 @@
+
+ <div class="container mt-4">
+  <h2 class="mb-4">{{ isEditMode ? 'Edit Invoice' : 'Add Invoice' }}</h2>
+  <form [formGroup]="invoiceForm" >
+    <div class="mb-3">
+      <label for="invoiceNumber" class="form-label">Invoice Number</label>
+      <input id="invoiceNumber" class="form-control" formControlName="invoiceNumber">
+      <div *ngIf="invoiceForm.get('invoiceNumber')!.invalid && (invoiceForm.get('invoiceNumber')!.touched || invoiceForm.get('invoiceNumber')!.dirty)" class="text-danger">
+        Invoice Number is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="currencyId">Currency Name</label>
+      <select id="currencyId" formControlName="currencyId" class="form-control" required>
+        <option value="" disabled>Select Currency</option>
+        <option *ngFor="let currency of currencies" [value]="currency.currencyId">{{ currency.currencyName }}</option>
+      </select>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="vendorId">Vendor Name</label>
+      <select id="vendorId" formControlName="vendorId" class="form-control" required>
+        <option value="" disabled>Select Venor</option>
+        <option *ngFor="let vendor of vendors" [value]="vendor.vendorId">{{ vendor.vendorName }}</option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <label for="invoiceAmount" class="form-label">Invoice Amount</label>
+      <input id="invoiceAmount" class="form-control" formControlName="invoiceAmount">
+      <div *ngIf="invoiceForm.get('invoiceAmount')!.invalid && (invoiceForm.get('invoiceAmount')!.touched || invoiceForm.get('invoiceAmount')!.dirty)" class="text-danger">
+         Invoice Amount is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="receivedDate" class="form-label">Invoice Received Date</label>
+      <input id="ReceivedDate" type="date" class="form-control" formControlName="ReceivedDate">
+      <div *ngIf="invoiceForm.get('ReceivedDate')!.invalid && (invoiceForm.get('ReceivedDate')!.touched || invoiceForm.get('ReceivedDate')!.dirty)" class="text-danger">
+        Invoice Received Date is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="invoiceDueDate" class="form-label">Invoice Due Date</label>
+      <input id="invoiceDueDate" type="date" class="form-control" formControlName="invoiceDueDate">
+      <div *ngIf="invoiceForm.get('invoiceDueDate')!.invalid && (invoiceForm.get('invoiceDueDate')!.touched || invoiceForm.get('invoiceDueDate')!.dirty)" class="text-danger">
+        Invoice Due Date is required and must be after the received date.
+      </div>
+    </div>
+
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" id="isActive" formControlName="isActive">
+      <label class="form-check-label" for="isActive">
+        Is Active
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary" *ngIf="!isEditMode" [disabled]="invoiceForm.invalid"  (click)="addInvoice()">Add Invoice</button>
+    <button type="button" class="btn btn-warning" *ngIf="isEditMode" [disabled]="invoiceForm.invalid" (click)="updateInvoice()">Edit Invoice</button>
+  </form>
+</div>
+ 
+
