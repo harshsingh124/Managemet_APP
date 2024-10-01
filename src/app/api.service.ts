@@ -98,7 +98,7 @@ export class ApiService {
 
 
 
-  // Currency Methods
+  // Currency Method
   getCurrencies(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrlcurrency}/AllCurrency`);
   }
